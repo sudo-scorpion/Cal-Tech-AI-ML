@@ -3,7 +3,7 @@
 import os
 import binascii
 import hashlib
-from flask import Flask, request, redirect, session
+from flask import Flask, request, redirect, session, jsonify
 
 app = Flask(__name__)
 
@@ -83,12 +83,13 @@ def register():
             'password': hash_password(password),
             'email': email
         }
-        return "You have registered successfully!"
+        return jsonify({'message': 'User registered successfully', 'username': username}), 201
     else:
-       return f"Username ({username}) already exists!"
+        return jsonify({'error': 'Username already exists'}), 400
+
 
 # Login route
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/login", methods=['POST'])
 def login():
     is_login_successful = 0
     if request.method == 'POST' and request.is_json:
@@ -105,12 +106,12 @@ def login():
             print("Authentication successful")
             session['username'] = username
             is_login_successful = 1
-            return redirect('/')
+            return jsonify({'message': 'Login successful', 'username': username}), 200
+            # return redirect('/')
         else:
             print("Authentication failed")
-            return redirect('/login')
-
-    return "Login successful!" if is_login_successful == 1 else "Login failed!"
+            return jsonify({'error': 'Invalid username or password'}), 401
+            # return redirect('/login')
 
 
 if __name__ == "__main__":
