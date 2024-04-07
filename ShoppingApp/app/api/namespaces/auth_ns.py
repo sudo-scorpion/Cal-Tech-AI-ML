@@ -1,14 +1,16 @@
 from flask_restx import Namespace, Resource, fields
-from app.services.auth_service import add_user, authenticate_user, get_all_users
+from app.services.auth_service import add_user, authenticate_user, get_all_users, logout_user
 
 # Define the namespace
 auth_ns = Namespace('auth', description='Authentication related operations.')
 
 # Request model for user registration
 registration_model = auth_ns.model('Registration', {
+    'id': fields.Integer(readOnly=True, description='The user unique identifier'),  # Removed 'readOnly=True' from 'id'
     'username': fields.String(required=True, description='Username'),
     'email': fields.String(required=True, description='Email address'),
     'password': fields.String(required=True, description='Password'),
+    'role': fields.String(required=False, description='User role', default='user'),  # Added a default value for 'role
 })
 
 # Request model for user login
@@ -24,7 +26,7 @@ class UserRegister(Resource):
     def post(self):
         """Register a new user."""
         data = auth_ns.payload
-        if add_user(data['username'], data['email'], data['password']):
+        if add_user(data['username'], data['email'], data['password'], data.get('role', 'user')):
             return {'message': 'User registered successfully.'}, 201
         else:
             return {'message': 'Registration failed.'}, 400
@@ -39,7 +41,7 @@ class UserLogin(Resource):
         user = authenticate_user(data['username'], data['password'])
         if user:
             # For simplicity, returning a mock session ID. Implement actual session management.
-            return {'message': f'User {user.username} logged in successfully.', 'session_id': 'mock_session_id'}, 200
+            return {'message': f'User {user.username} logged in successfully.', 'session_id': f'{user.session_id}'}, 200
         else:
             return {'message': 'Username or password is incorrect.'}, 401
         
@@ -48,7 +50,7 @@ class UserLogin(Resource):
 class UserLogout(Resource):
     def post(self):
         """Log out a user."""
-        # For simplicity, returning a mock message. Implement actual session management.
+        logout_user()
         return {'message': 'User logged out successfully.'}, 200
     
 # Get all users route

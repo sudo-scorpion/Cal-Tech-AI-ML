@@ -1,13 +1,16 @@
-from app.models.user import User
+###############################################################################.
+# Description: This file contains the data store for the ShoppingApp. 
+# It contains dummy data for users, categories, products, carts, and orders. 
+# This data is used to simulate the behavior of the application during 
+# development and testing
+###############################################################################.
+
 from app.models.product import Product
 from app.models.category import Category
 from app.models.cart import Cart, CartItem
 
 # Users
-users_db = [
-    User(id=1, username='john_doe', email='john@example.com', password='hash1', role='customer', session_id='session123'),
-    User(id=2, username='jane_doe', email='jane@example.com', password='hash2', role='admin', session_id='session456'),
-]
+users_db = []
 
 # Categories
 categories_db = [

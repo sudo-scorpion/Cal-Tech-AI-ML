@@ -1,5 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app.services.product_service import add_product, get_all_products, update_product, delete_product
+from utils.helper import requires_roles
 
 # Define the namespace
 product_ns = Namespace('products', description='Product related operations.')
@@ -21,6 +22,7 @@ class ProductList(Resource):
 
     @product_ns.expect(product_model)
     @product_ns.marshal_with(product_model, code=201)
+    @requires_roles('admin')
     def post(self):
         """Create a new product"""
         data = product_ns.payload
@@ -31,12 +33,15 @@ class ProductList(Resource):
 @product_ns.param('id', 'The product identifier')
 class Product(Resource):
     @product_ns.doc('delete_product')
+    @product_ns.response(204, 'Product deleted')
+    @requires_roles('admin')
     def delete(self, id):
         """Delete a product by id"""
         return delete_product(id)
 
     @product_ns.expect(product_model)
     @product_ns.marshal_with(product_model)
+    @requires_roles('admin')
     def put(self, id):
         """Update a product by id"""
         data = product_ns.payload

