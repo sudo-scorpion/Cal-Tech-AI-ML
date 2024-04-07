@@ -1,5 +1,5 @@
 import unittest
-from app import create_app
+from ShoppingApp.app import create_app
 
 class TestAPI(unittest.TestCase):
     @classmethod
