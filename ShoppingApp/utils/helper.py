@@ -5,8 +5,6 @@ from functools import wraps
 from flask import jsonify, request, session
 from app.models.product import Product
 
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
 
 def generate_secure_id(user_identifier):
     # Ensure user_identifier is a string. If it's not, you can convert it.

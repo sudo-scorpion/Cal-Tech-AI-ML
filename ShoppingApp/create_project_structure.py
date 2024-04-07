@@ -1,11 +1,12 @@
 import os
+import sys
 
-def create_project_structure(base_path, structure):
+def create_project_structure(structure, base_path=''):
     for name, value in structure.items():
         current_path = os.path.join(base_path, name)
         if isinstance(value, dict):  # It's a directory
             os.makedirs(current_path, exist_ok=True)
-            create_project_structure(current_path, value)  # Recurse into the directory
+            create_project_structure(value, current_path)  # Recurse into the directory
         else:  # It's a file
             with open(current_path, 'w') as f:
                 f.write(value)  # Create an empty file for now
@@ -53,9 +54,9 @@ project_structure = {
 }
 
 # Specify the base path where you want to create the project
-base_path = ''
+base_path = sys.argv[1] if len(sys.argv) > 1 else ''
 
 # Create the project structure
-create_project_structure(base_path, project_structure)
+create_project_structure(project_structure, base_path)
 
 print(f"Project structure has been created at {base_path}")
