@@ -8,7 +8,7 @@ from app.api.namespaces.checkout_ns import checkout_ns
 
 def create_app():
     app = Flask(__name__)
-    api = Api(app, title='Shopping App', version='1.0', description='A simple shopping API')
+    api = Api(app, title='Shopping App', version='1.0', description='Welcome to the Demo Marketplace')
     
     # Register namespaces
     api.add_namespace(auth_ns, path='/auth')

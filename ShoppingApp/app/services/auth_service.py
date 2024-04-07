@@ -14,3 +14,13 @@ def authenticate_user(username, password):
     if user and check_password_hash(user.password, password):
         return user
     return None
+
+def logout_user(user_id):
+    user = next((u for u in users_db if u.id == user_id), None)
+    if user:
+        user.session_id = None
+        return {"message": "User logged out successfully"}
+    return {"message": "User not found"}
+
+def get_all_users():
+    return users_db
