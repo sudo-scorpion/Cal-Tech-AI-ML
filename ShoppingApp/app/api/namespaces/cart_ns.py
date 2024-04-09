@@ -1,10 +1,11 @@
 from flask_restx import Namespace, Resource, fields
 from flask import session
-from utils.helper import requires_roles
+from utils.helper import requires_roles, ensure_product_exists
 from app.services.cart_service import add_to_cart, remove_from_cart, get_cart_items, update_item_quantity
 
 # Define the namespace
 cart_ns = Namespace('cart', description='Cart related operations.')
+
 
 # Model for cart item data
 cart_item_model = cart_ns.model('CartItem', {
@@ -14,8 +15,9 @@ cart_item_model = cart_ns.model('CartItem', {
 
 # Model for adding or updating cart items
 cart_action_model = cart_ns.model('CartAction', {
-    'product_id': fields.Integer(required=True, description='The product identifier'),
-    'quantity': fields.Integer(required=True, description='Quantity of the product'),
+    'items': fields.List(fields.Nested(cart_item_model), required=True, 
+    example= [{'product_id': 1, 'quantity': 1}, {'product_id': 3, 'quantity': 2}],
+    description='List of items to add or update in the cart'),
 })
 
 @cart_ns.route('/')
@@ -32,6 +34,7 @@ class CartList(Resource):
     @cart_ns.expect(cart_action_model)
     @cart_ns.marshal_with(cart_item_model, code=201)
     @requires_roles('user')
+    @ensure_product_exists
     def post(self):
         """Add an item to the cart"""
         session_id = session.get('session_id')

@@ -1,5 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app.services.auth_service import add_user, authenticate_user, get_all_users, logout_user
+from utils.helper import ensure_user_does_not_exist, requires_admin_token
 
 # Define the namespace
 auth_ns = Namespace('auth', description='Authentication related operations.')
@@ -11,6 +12,7 @@ registration_model = auth_ns.model('Registration', {
     'email': fields.String(required=True, description='Email address'),
     'password': fields.String(required=True, description='Password'),
     'role': fields.String(required=False, description='User role', default='user'),  # Added a default value for 'role
+    'admin_token': fields.String(required=False, description='Admin token'),  # Added 'admin_token' field
 })
 
 # Request model for user login
@@ -23,11 +25,27 @@ login_model = auth_ns.model('Login', {
 @auth_ns.route('/register')
 class UserRegister(Resource):
     @auth_ns.expect(registration_model)
+    @ensure_user_does_not_exist
     def post(self):
         """Register a new user."""
         data = auth_ns.payload
         if add_user(data['username'], data['email'], data['password'], data.get('role', 'user')):
             return {'message': 'User registered successfully.'}, 201
+        else:
+            return {'message': 'Registration failed.'}, 400
+
+# Admin registration route
+@auth_ns.route('/register/admin')
+class AdminRegister(Resource):
+    @auth_ns.expect(registration_model)
+    @auth_ns.doc(security='admin_token')
+    @requires_admin_token
+    @ensure_user_does_not_exist
+    def post(self):
+        """Register a new user."""
+        data = auth_ns.payload
+        if add_user(data['username'], data['email'], data['password'], data.get('role', 'admin')):
+            return {'message': 'Admin registered successfully.'}, 201
         else:
             return {'message': 'Registration failed.'}, 400
 

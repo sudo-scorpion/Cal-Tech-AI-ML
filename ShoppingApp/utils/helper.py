@@ -2,10 +2,14 @@ import os
 import time
 import hashlib
 from functools import wraps
-from flask import jsonify, request, session
-from app.models.product import Product
+from flask import request, session
+from app.data.data_store import users_db
+from app.data.data_store import products_db
 from utils.bypass_role_requirements import check_bypass_flag
+from dotenv import load_dotenv
 
+# Load environment variables from the .env file
+load_dotenv()
 
 def generate_secure_id(user_identifier):
     # Ensure user_identifier is a string. If it's not, you can convert it.
@@ -23,6 +27,21 @@ def generate_secure_id(user_identifier):
     # Return the hexadecimal representation of the digest
     return hash_object.hexdigest()
 
+# Decorator to verify a user doesn't exist
+def ensure_user_does_not_exist(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        data = request.get_json()
+        if data:
+            username = data.get('username')
+            email = data.get('email')
+        if not username or not email:
+            return {'error': 'Username and email are required'}, 400
+        if any(user.username == username or user.email == email for user in users_db):
+            return {'error': 'User already exists'}, 400
+        return func(*args, **kwargs)
+    return wrapper
+# Decorator to require specific roles
 def requires_roles(*required_roles):
     def wrapper(fn):
         @wraps(fn)
@@ -42,17 +61,31 @@ def requires_roles(*required_roles):
         return decorated_view
     return wrapper
 
-# Decorator to ensure product ID exists
-def ensure_product_exists(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        print(request.get_json())
-        request_data = request.get_json();
-        if request_data:
-            product_id = request_data.get('products').get('product_id')
-        if product_id is None:
-            return jsonify({'error': 'Product ID is missing from cart data'}), 400
-        if product_id not in Product.products:
-            return jsonify({'error': 'Product not found'}), 404
-        return func(*args, **kwargs)
-    return wrapper
+# Decorator to valid admin token
+def requires_admin_token(fn):
+    @wraps(fn)
+    def decorated_view(*args, **kwargs):
+        if 'admin_token' not in request.json:
+            return {'error': 'Admin token required'}, 403
+        admin_token = request.json.get('admin_token')
+        if admin_token != os.getenv('ADMIN_TOKEN'):
+            return {'error': 'Invalid admin token'}, 403
+        return fn(*args, **kwargs)
+    return decorated_view
+
+# Decorator to ensure product exists
+# {'session id': 'session 5', 'items': [{'product_id': 2, 'quantity': 1}, {'product_id': 7, 'quantity': 1}]}
+def ensure_product_exists(fn):
+    @wraps(fn)
+    def decorated_view(*args, **kwargs):
+        data = request.get_json()
+        if data:
+            items = data.get('items')
+            if items:
+                for item in items:
+                    product_id = item.get('product_id')
+                    if not any(product.id == product_id for product in products_db):
+                        return {'error': 'Product not found'}, 404
+        return fn(*args, **kwargs)
+    return decorated_view
+

@@ -7,8 +7,8 @@ checkout_ns = Namespace('checkout', description='Checkout related operations.')
 
 # Model for checkout data
 checkout_model = checkout_ns.model('Checkout', {
-    'payment_method': fields.String(required=True, description='Payment method'),
-    'payment_details': fields.Raw(required=True, description='Payment details such as card number, PayPal email, etc.'),
+    'payment_method': fields.String(required=True, example="PayPal", description='Payment method'),
+    'payment_details': fields.Raw(required=True, example={"email": "your paypay email"}, description='Payment details such as card number, PayPal email, etc.'),
 })
 
 @checkout_ns.route('/')
