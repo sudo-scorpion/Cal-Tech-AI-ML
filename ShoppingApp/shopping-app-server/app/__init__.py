@@ -7,11 +7,15 @@ from app.api.namespaces.category_ns import category_ns
 from app.api.namespaces.product_ns import product_ns
 from app.api.namespaces.cart_ns import cart_ns
 from app.api.namespaces.checkout_ns import checkout_ns
+from flask_cors import CORS
 
 def create_app():
     # Initialize the Flask application
     app = Flask(__name__)
     app.secret_key = binascii.hexlify(os.urandom(24)).decode()
+
+    # Enable CORS
+    CORS(app)
 
     # Session cookie settings
     app.config['SESSION_COOKIE_NAME'] = 'ShoppingAppSession'

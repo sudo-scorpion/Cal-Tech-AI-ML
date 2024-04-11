@@ -42,3 +42,7 @@ venv/
 
 # Flask specific
 instance/
+
+# Angular specific
+/node_modules/
+/dist/
