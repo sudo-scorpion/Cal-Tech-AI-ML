@@ -29,6 +29,7 @@ class UserRegister(Resource):
     def post(self):
         """Register a new user."""
         data = auth_ns.payload
+        print(data)
         if add_user(data['username'], data['email'], data['password'], data.get('role', 'user')):
             return {'message': 'User registered successfully.'}, 201
         else:
