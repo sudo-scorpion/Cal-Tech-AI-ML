@@ -10,7 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 - Python 3.6 or higher
 - pip
-- Docker
+- Docker (Optional)
 
 ### Installing
 
@@ -51,13 +51,13 @@ Alternatively, you can run the application using Docker. Follow these steps:
 1. Pull the Docker image from Docker Hub:
 
     ```bash
-    docker pull sudo-scorpion/shopping-app
+    docker pull sudoscorpion/shopping-app:0.0.1
     ```
 
 2. Run the Docker container:
 
     ```bash
-    docker run -p 5000:5000 sudo-scorpion/shopping-app
+    docker run -p 5000:5000 sudoscorpion/shopping-app:0.0.1
     ```
 
     This command starts the Flask application inside a Docker container. By default, the application will be accessible at http://127.0.0.1:5000/.
