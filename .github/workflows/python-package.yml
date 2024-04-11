@@ -25,7 +25,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r ShoppingApp/requirements.txt
+        pip install -r ShoppingApp/shopping-app-server/requirements.txt
         pip install pytest pytest-cov codecov
 
     - name: Test with pytest
