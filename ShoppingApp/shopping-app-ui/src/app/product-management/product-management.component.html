@@ -1,1 +1,39 @@
-<p>product-management works!</p>
+<div class="container product-management-container">
+    <h2 class="product-management-header">Product Management</h2>
+
+    <div class="form-group product-form" style="display: flex; justify-content: space-between;">
+        <div>
+            <label for="product-name">Product Name:</label>
+            <input type="text" class="form-control" id="product-name" name="productName" [(ngModel)]="newProduct.name">
+        </div>
+
+        <div>
+            <label for="product-price">Product Price:</label>
+            <input type="number" class="form-control" id="product-price" name="productPrice" [(ngModel)]="newProduct.price">
+        </div>
+
+        <div>
+            <label for="category-id">Category:</label>
+            <select class="form-control" id="category-id" name="categoryId" [(ngModel)]="newProduct.category_id">
+                <option value="" disabled selected>Select a category</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+        </div>
+
+        <button class="btn btn-primary create-product-button" (click)="createProduct(newProduct)">Create Product</button>
+    </div>
+
+    <ul class="list-group product-list">
+        <li class="list-group-item product-item" *ngFor="let product of products">
+            <div class="product-details">
+                <h5 class="product-name">{{ product.name }}</h5>
+                <p class="product-price">Price: ${{ product.price }}</p>
+                <p class="product-category-id">Category: {{ product.name }}</p>
+            </div>
+            <div class="product-actions">
+                <button class="btn btn-warning update-product-button" (click)="updateProduct(product.id, product)">Update</button>
+                <button class="btn btn-danger delete-product-button" (click)="deleteProduct(product.id)">Delete</button>
+            </div>
+        </li>
+    </ul>
+</div>

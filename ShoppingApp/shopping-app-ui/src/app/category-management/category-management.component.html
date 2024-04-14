@@ -1,1 +1,21 @@
-<p>category-management works!</p>
+<div class="container">
+    <h2>Category Management</h2>
+
+    <!-- Form for creating a new category -->
+    <form (ngSubmit)="createCategory(newCategory)" #categoryForm="ngForm">
+        <div class="form-group">
+            <label for="name">Category Name:</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="newCategory.name" name="name">
+        </div>
+        <button type="submit" class="btn btn-primary">Create Category</button>
+    </form>
+
+    <!-- List of existing categories -->
+    <ul class="list-group mt-4">
+        <li class="list-group-item" *ngFor="let category of categories">
+            {{ category.name }}
+            <!-- <button class="btn btn-secondary ml-2" (click)="updateCategory(category.id, category)">Update</button> -->
+            <button class="btn btn-danger ml-2" (click)="deleteCategory(category.id)">Delete</button>
+        </li>
+    </ul>
+</div>

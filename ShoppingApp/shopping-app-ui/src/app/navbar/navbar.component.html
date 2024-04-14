@@ -1,0 +1,21 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+      <!-- Brand and burger are normally on the left side -->
+  </div>
+
+  <!-- 'navbar-menu' is the container for 'navbar-start' and 'navbar-end' -->
+  <div id="navbarBasicExample" class="navbar-menu">
+    <!-- 'navbar-end' should wrap your navigation items you want on the right -->
+    <div class="navbar-end">
+      <a class="navbar-item" (click)="navigateToHome()">Home</a>
+      <a class="navbar-item" (click)="navigateToProducts()">Products</a>
+      <a class="navbar-item" (click)="navigateToCategories()">Categories</a>
+      <a class="navbar-item" (click)="navigateToLogin()">Login</a>
+      <a class="navbar-item" (click)="navigateToRegister()">Register</a>
+      <a class="navbar-item" (click)="navigateToLogout()">Logout</a>
+      <a class="navbar-item" (click)="navigateToAdmin()">Admin</a>
+      <a class="navbar-item" (click)="navigateToCart()">Cart</a>
+      <a class="navbar-item" (click)="navigateToProfile()">Profile</a>
+    </div>
+  </div>
+</nav>

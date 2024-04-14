@@ -15,4 +15,10 @@ export class RegistrationService {
     // Send the user registration data to the server as json
     return this.http.post(`${environment.apiUrl}auth/register`, userData);
   }
+
+  registerAdmin(userData: any) {
+    // Send the admin registration data to the server as json
+    console.log('Registering admin:', userData);
+    return this.http.post(`${environment.apiUrl}auth/register/admin`, userData);
+  }
 }
