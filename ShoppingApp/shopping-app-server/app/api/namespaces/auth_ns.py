@@ -12,6 +12,7 @@ registration_model = auth_ns.model('Registration', {
     'email': fields.String(required=True, description='Email address'),
     'password': fields.String(required=True, description='Password'),
     'role': fields.String(required=False, description='User role', default='user'),  # Added a default value for 'role
+    'session_id': fields.String(required=False, description='Session ID'),  # Added 'session_id' field
     'admin_token': fields.String(required=False, description='Admin token'),  # Added 'admin_token' field
 })
 

@@ -1,0 +1,90 @@
+.container {
+    max-width: 100%; // Limits the width for better focus
+    margin: auto; // Centers the container
+    padding: 20px;
+    background-color: #f9f9f9; // A light background color
+    border-radius: 8px; // Rounded corners
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); // Subtle shadow for depth
+
+    h2 {
+        color: #333; // Dark color for text
+        text-align: center; // Center align the heading
+        margin-bottom: 20px; // Space below the heading
+    }
+
+    .form-group {
+        margin-bottom: 20px; // Space below the form group
+    }
+
+    .form-label {
+        display: block; // Block level element
+        margin-bottom: 10px; // Space below the label
+        font-size: medium;
+    }
+
+    .form-select {
+        width: auto; // Full width for the select element
+        padding: 10px; // Padding for the select element
+        border: 1px solid #ccc; // Border for the select element
+        border-radius: 4px; // Rounded corners
+        font-size: medium;
+        height: auto;
+        appearance: none; // Remove the default dropdown arrow
+        // move the dropdown arrow to the right 
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M7 10l5 5 5-5z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 18px;
+
+        &:focus {
+            outline: none; // Remove the default focus style
+            border-color: #007bff; // Highlight the border on focus
+        }
+
+        &.form-select-lg {
+            padding: 15px; // Larger padding for the large select element
+            font-size: large;
+        }
+
+    }
+
+    // Add styles for the product list
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start; // Align items to the start of the container
+
+        // Styles for each product card
+        .card {
+            flex: 0 0 calc(33.333% - 20px); // Three cards per row with 20px gap
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+
+            .card-body {
+                padding: 20px;
+            }
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+
+            &.btn-danger {
+                background-color: #dc3545;
+
+                &:hover {
+                    background-color: #c82333;
+                }
+            }
+            }
+        }
+    }
+}

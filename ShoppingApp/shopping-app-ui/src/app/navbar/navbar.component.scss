@@ -1,0 +1,68 @@
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  list-style-type: none;
+  margin: 0;
+  padding: 20px; /* Increase padding to make navbar bigger */
+  overflow: hidden;
+  background: linear-gradient(to right, #f8f8f8, #ddd);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);/* Set the background color */
+  margin-bottom: 20px;
+
+  .navbar-brand {
+    margin-right: auto; // This pushes the navigation items to the right
+    font-weight: bold; /* Add font weight to the brand/logo */
+    color: #333; /* Set the color of the brand/logo */
+  }
+
+  .navbar-item {
+    margin-left: 20px;
+    color: #555; /* Set the color of the navigation items */
+    transition: color 0.3s ease; /* Add a smooth color transition on hover */
+
+    &:hover {
+      color: #000; /* Change the color on hover */
+      cursor: pointer;
+    }
+  }
+
+  li {
+    float: right;.navbar {
+  display: flex;
+  justify-content: flex-end;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(to right, #f8f8f8, #ddd); /* Add a gradient background */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Add a subtle shadow */
+
+  .navbar-brand {
+    margin-right: auto; 
+    font-weight: bold; 
+    color: #333; 
+    transition: color 0.3s ease; /* Add a smooth color transition on hover */
+
+    &:hover {
+      color: #000; /* Darken the color on hover */
+    }
+  }
+
+  .navbar-item {
+    margin-left: 20px;
+    color: #555; 
+    transition: color 0.3s ease; 
+
+    &:hover {
+      color: #333; /* Darken the color on hover */
+    }
+  }
+}
+
+    &:first-child {
+      float: left; // If the first item is the brand/logo
+    }
+  }
+}

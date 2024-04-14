@@ -13,6 +13,7 @@
   
   .form-group {
     margin-bottom: 15px;
+    margin-right: 15px;
   }
   
   label {
@@ -47,4 +48,101 @@
     color: red;
     margin-top: 5px;
   }
+
+  .form-select {
+    width: auto; // Full width for the select element
+    padding: 10px; // Padding for the select element
+    border: 1px solid #ccc; // Border for the select element
+    border-radius: 4px; // Rounded corners
+    font-size: medium;
+    height: auto;
+    appearance: none; // Remove the default dropdown arrow
+    // move the dropdown arrow to the right 
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px;
+
+    &:focus {
+        outline: none; // Remove the default focus style
+        border-color: #007bff; // Highlight the border on focus
+    }
+
+    &.form-select-lg {
+        padding: 15px; // Larger padding for the large select element
+        font-size: large;
+    }
+}
+
+.form-select-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.registration-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+  // Center the button
+    display: block;
+    margin: 0 auto;
+  // center the button text
+    text-align: center;
+    // position the button at the bottom of the form and center it
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &:hover {
+        background-color: #0056b3;
+    }
+
+    .error-message {
+        color: red;
+        margin-top: 5px;
+    }
+
+    .form-select {
+        width: auto; // Full width for the select element
+        padding: 10px; // Padding for the select element
+        border: 1px solid #ccc; // Border for the select element
+        border-radius: 4px; // Rounded corners
+        font-size: medium;
+        height: auto;
+        appearance: none; // Remove the default dropdown arrow
+        // move the dropdown arrow to the right 
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M7 10l5 5 5-5z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 18px;
+    
+        &:focus {
+            outline: none; // Remove the default focus style
+            border-color: #007bff; // Highlight the border on focus
+        }
+    
+        &.form-select-lg {
+            padding: 15px; // Larger padding for the large select element
+            font-size: large;
+        }
+    }
+}
+
+.form-button 
+// position the center
+{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    // position: absolute;
+    // bottom: 20px;
+    // left: 50%;
+    // transform: translateX(-50%);
+}
   

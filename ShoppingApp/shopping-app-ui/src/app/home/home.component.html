@@ -1,0 +1,41 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-3">Welcome to PopCart</h1>
+        </div>
+    </div>
+
+    <!-- Category selection -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="categorySelect" class="form-label">Select Category:</label>
+                <select class="form-select" id="categorySelect" [(ngModel)]="selectedCategory" (change)="loadProducts()">
+                    <option value="">All</option>
+                    <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Product list -->
+    <div class="row">
+        <!-- For each product in the products array, create a column -->
+        <div class="col-md-4" *ngFor="let product of products">
+            <!-- In each column, create a card -->
+            <div class="card">
+                <!-- In each card, create a card body -->
+                <div class="card-body">
+                    <!-- Display the product's name as the card title -->
+                    <h4 class="card-title">{{ product.name }}</h4>
+                    <!-- Display the product's price as the card subtitle -->
+                    <h5 class="card-subtitle mb-2 text-muted">Price: {{ product.price }}</h5>
+                    <!-- Display the product's description as the card text -->
+                    <p class="card-text">{{ product.description }}</p>
+                    <!-- Add an "Add to Cart" button that calls the addToCart method when clicked -->
+                    <button class="btn btn-primary" (click)="addToCart(product.id)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>

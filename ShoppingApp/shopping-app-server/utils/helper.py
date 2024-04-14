@@ -7,6 +7,7 @@ from app.data.data_store import users_db
 from app.data.data_store import products_db
 from utils.bypass_role_requirements import check_bypass_flag
 from dotenv import load_dotenv
+from app.data.data_store import users_db
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -46,9 +47,21 @@ def requires_roles(*required_roles):
     def wrapper(fn):
         @wraps(fn)
         def decorated_view(*args, **kwargs):
+            session_id = request.args.get('sessionid', None)
+            print('Session ID: ', session_id)
+            # Get the user role from the user_db using the session_id
+            # If the session_id is not found, return an error
+            if session_id is None:
+                return {'error': 'Session ID required'}, 403
+            user = next((user for user in users_db if user.session_id == session_id), None)
+            if user is None:
+                return {'error': 'Session ID not found'}, 403
+            session['role'] = user.role
+            session['session_id'] = user.session_id
             print('Bypassing role requirements: ', check_bypass_flag())
             if check_bypass_flag():
                 return fn(*args, **kwargs)
+            print(session)
             if 'role' and 'session_id' not in session:
                 # Assuming unauthenticated users don't have a 'user_role' key in the session
                 return {'error': 'Authentication required'}, 401

@@ -13,6 +13,17 @@
       <label for="password">Password</label>
       <input type="password" id="password" name="password" [(ngModel)]="userData.password" required>
     </div>
-    <button type="submit">Register</button>
+    <div class="form-group">
+      <label class="form-select-label" for="role">Role</label>
+      <select class="form-select" id="role" name="role" [(ngModel)]="userData.role" (change)="onRoleChange($event)">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>      
+    </div>
+    <div class="form-group" *ngIf="userData.role === 'admin'">
+      <label for="adminToken">Admin Token</label>
+      <input type="text" id="adminToken" name="adminToken" [(ngModel)]="userData.admin_token">
+    </div>
+    <button class="form-button" id="registration-btn" type="submit">Register</button>
   </form>
 </div>
