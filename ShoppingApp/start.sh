@@ -1,5 +1,7 @@
 #!/bin/sh
 # Start Nginx in the background
-nginx &
-# Start Gunicorn
-gunicorn -w 4 -b 127.0.0.1:5000 shopping-app-server:run
+nginx -g 'daemon off;' &
+
+# Start Gunicorn to serve the Flask application
+cd /backend
+gunicorn -w 4 -b localhost:5000 run:app
